@@ -13,7 +13,7 @@ import java.util.Queue;
 
 @Service
 public class SeatAllocationService {
-    public static final int sectionSize = 4;
+    public static final int sectionSize = 64;
     Map<Integer, Boolean> seatOccupiedMap = new HashMap<>();
     Queue<Seat> seatOrder = new LinkedList<>();
 

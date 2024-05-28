@@ -67,6 +67,7 @@ public class TicketService {
         if (ticket.getSeatAllocated().equals(seat))
             throw new RequestedSeatSameAsAllocatedException();
         Seat previousSeat = ticket.getSeatAllocated();
+        seat.setSection(seat.getSection().toUpperCase());
         ticket.setSeatAllocated(seatAllocationService.allocateSpecificSeat(seat));
         seatAllocationService.manageVacatedSeat(previousSeat);
         ticketRepository.save(ticket);
