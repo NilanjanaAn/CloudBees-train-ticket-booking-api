@@ -36,8 +36,6 @@ public class SeatAllocationService {
     }
 
     public Seat allocateSpecificSeat(Seat seat) {
-        if (seatOrder.isEmpty())
-            throw new TicketsSoldOutException();
         if (seatOccupiedMap.getOrDefault(seatToNumber(seat), false))
             throw new SeatOccupiedException();
         seatOccupiedMap.put(seatToNumber(seat), true);
