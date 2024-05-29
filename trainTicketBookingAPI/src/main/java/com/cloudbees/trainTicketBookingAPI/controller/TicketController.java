@@ -7,6 +7,7 @@ import com.cloudbees.trainTicketBookingAPI.domain.response.SeatChartResponseDTO;
 import com.cloudbees.trainTicketBookingAPI.exception.InvalidEmailFormatException;
 import com.cloudbees.trainTicketBookingAPI.exception.InvalidSeatRequestException;
 import com.cloudbees.trainTicketBookingAPI.service.TicketService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -34,6 +35,8 @@ public class TicketController {
      * @param pnr pnr the PNR number of the ticket
      * @return receipt of the ticket with the specified PNR number and allocated seat
      */
+    @Operation(summary = "Get Ticket Receipt",
+        description = "Get the receipt of a ticket by its Passenger Name Record (PNR) number.")
     @GetMapping("/receipt/{pnr}")
     public Ticket getTicket(@PathVariable Long pnr) {
         return ticketService.getTicketByPnr(pnr);
@@ -44,6 +47,8 @@ public class TicketController {
      *
      * @return a list of SeatChartResponseDTO objects representing the current seat chart
      */
+    @Operation(summary = "Get Seat Chart",
+        description = "Get the current seat chart of the train, which shows the users and the seat they have been allocated.")
     @GetMapping("/seatchart")
     public List<SeatChartResponseDTO> getSeatChart() {
         return ticketService.getSeatChart();
@@ -55,6 +60,8 @@ public class TicketController {
      * @param section the section of the train whose seat chart must be retrieved
      * @return a list of SeatChartResponseDTO objects representing the seat chart for the requested section
      */
+    @Operation(summary = "Get Seat Chart By Section",
+        description = "Get the current seat chart of the requested section of the train, which shows the users and the seat they have been allocated.")
     @GetMapping("/seatchart/{section}")
     public List<SeatChartResponseDTO> getSeatChartBySection(@PathVariable String section) {
         return ticketService.getSeatChartBySection(section.toUpperCase());
@@ -68,6 +75,8 @@ public class TicketController {
      * @return the purchased ticket
      * @throws InvalidEmailFormatException if the user's email format is invalid
      */
+    @Operation(summary = "Purchase Ticket",
+        description = "Purchase a ticket for the specified user in the train from London to France for $20.")
     @PostMapping("/purchase")
     public Ticket purchaseTicket(@RequestBody @Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
@@ -80,6 +89,8 @@ public class TicketController {
      *
      * @param pnr the PNR number of the ticket to be removed
      */
+    @Operation(summary = "Remove Ticket",
+        description = "Remove a user's ticket by its PNR number.")
     @DeleteMapping("/remove/{pnr}")
     public void removeUserTicket(@PathVariable Long pnr) {
         ticketService.removeUserTicket(pnr);
@@ -94,6 +105,8 @@ public class TicketController {
      * @return the modified ticket
      * @throws InvalidSeatRequestException if the seat request is invalid
      */
+    @Operation(summary = "Modify Seat",
+        description = "Modify the seat allocated to a user's ticket, if present and unoccupied. You may check the seatchart to identify vacant seats.")
     @PutMapping("/modify/{pnr}")
     public Ticket modifySeat(@PathVariable Long pnr, @RequestBody @Valid Seat seat, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
