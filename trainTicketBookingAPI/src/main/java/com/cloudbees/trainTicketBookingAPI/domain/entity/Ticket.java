@@ -25,6 +25,10 @@ public class Ticket {
     @Embedded
     private Seat seatAllocated;
 
+    /**
+     * The default constructor for Ticket class.
+     * Fields fromStation, toStation and pricePaidInDollars have been initialized as they are the same for every user.
+     */
     public Ticket() {
         this.fromStation = "London";
         this.toStation = "France";

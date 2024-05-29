@@ -17,6 +17,9 @@ public class SeatAllocationService {
     Map<Integer, Boolean> seatOccupiedMap = new HashMap<>();
     Queue<Seat> seatOrder = new LinkedList<>();
 
+    /**
+     * Initializes the seatOrder queue with seats from sections A and B.
+     */
     @PostConstruct
     public void init() {
         for (int seats = 0; seats < sectionSize * 2; seats++) {
@@ -24,6 +27,12 @@ public class SeatAllocationService {
         }
     }
 
+    /**
+     * Allocates the next available seat.
+     *
+     * @return the allocated seat
+     * @throws TicketsSoldOutException if all tickets are sold out
+     */
     public Seat allocateNewSeat() {
         while (!seatOrder.isEmpty() && seatOccupiedMap.getOrDefault(seatToNumber(seatOrder.peek()), false)) {
             seatOrder.poll();
@@ -35,6 +44,13 @@ public class SeatAllocationService {
         return nextSeat;
     }
 
+    /**
+     * Allocates a requested seat if it is available.
+     *
+     * @param seat the seat to allocate
+     * @return the allocated seat
+     * @throws SeatOccupiedException if the seat is already occupied
+     */
     public Seat allocateSpecificSeat(Seat seat) {
         if (seatOccupiedMap.getOrDefault(seatToNumber(seat), false))
             throw new SeatOccupiedException();
@@ -42,11 +58,22 @@ public class SeatAllocationService {
         return seat;
     }
 
+    /**
+     * Manages a vacated seat by marking it as available and adding it back to the seat order queue.
+     *
+     * @param seat the seat vacated due to removal or modification of ticket
+     */
     public void manageVacatedSeat(Seat seat) {
         seatOccupiedMap.put(seatToNumber(seat), false);
         seatOrder.add(seat);
     }
 
+    /**
+     * Converts a seat object to a unique seat number based on section and seatNumber.
+     *
+     * @param seat the seat to convert
+     * @return the unique seat number
+     */
     public int seatToNumber(Seat seat) {
         return (seat.getSection().equals("A") ? 0 : sectionSize) + seat.getSeatNumber();
     }

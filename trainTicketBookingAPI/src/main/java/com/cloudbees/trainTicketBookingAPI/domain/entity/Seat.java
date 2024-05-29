@@ -24,6 +24,12 @@ public class Seat {
     @Max(SeatAllocationService.sectionSize)
     private Integer seatNumber;
 
+    /**
+     * Checks whether the current seat has the same section and seatNumber as the provided seat.
+     *
+     * @param otherSeat the seat to compare the current seat with
+     * @return a boolean value representing whether the seats are equal
+     */
     public boolean equals(Seat otherSeat) {
         if (this == otherSeat)
             return true;
