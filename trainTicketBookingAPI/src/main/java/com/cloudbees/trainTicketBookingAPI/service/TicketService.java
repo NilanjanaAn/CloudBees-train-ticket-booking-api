@@ -41,7 +41,8 @@ public class TicketService {
      * Retrieves a ticket by its PNR (Passenger Name Record) number.
      *
      * @param pnr the PNR number of the ticket
-     * @return receipt of the ticket with the specified PNR number and allocated seat* @throws NoTicketFoundException if no ticket is found with the specified PNR number
+     * @return receipt of the ticket with the specified PNR number and allocated seat
+     * @throws NoTicketFoundException if no ticket is found with the specified PNR number
      */
     public Ticket getTicketByPnr(Long pnr) {
         Optional<Ticket> ticket = ticketRepository.findById(pnr);

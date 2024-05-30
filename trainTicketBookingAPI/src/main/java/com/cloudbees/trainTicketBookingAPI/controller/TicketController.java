@@ -32,7 +32,7 @@ public class TicketController {
     /**
      * Retrieves a ticket by its Passenger Name Record (PNR) number.
      *
-     * @param pnr pnr the PNR number of the ticket
+     * @param pnr the PNR number of the ticket
      * @return receipt of the ticket with the specified PNR number and allocated seat
      */
     @Operation(summary = "Get Ticket Receipt",
